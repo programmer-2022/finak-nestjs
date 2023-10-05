@@ -1,0 +1,22 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Eventos {
+  id              Int        @id @default(autoincrement())
+  fecha           DateTime   @default(now())
+  description     String
+  tipoEvento      TipoEvento @relation(fields: [fk_idTipoEvento], references: [id])
+  fk_idTipoEvento Int
+}
+
+model TipoEvento {
+  id      Int       @id @default(autoincrement())
+  name    String
+  Eventos Eventos[]
+}
