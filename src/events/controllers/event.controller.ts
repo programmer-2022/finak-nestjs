@@ -1,18 +1,19 @@
 import { Controller, Get, Post, Body } from '@nestjs/common';
-import { EventsService } from '../services/events.service';
+import { EventService } from '../services/event.service';
 import { CreateEventDto } from '../dto/create-event.dto';
+import { Event } from '../entities';
 
 @Controller('eventos')
 export class EventController {
-  constructor(private readonly eventsService: EventsService) {}
+  constructor(private readonly eventService: EventService) {}
 
   @Post()
-  create(@Body() createEventDto: CreateEventDto) {
-    return this.eventsService.create(createEventDto);
+  async create(@Body() createEventDto: CreateEventDto): Promise<Event> {
+    return await this.eventService.create(createEventDto);
   }
 
   @Get()
-  findAll() {
-    return this.eventsService.findAll();
+  async findAll() {
+    return await this.eventService.findAll();
   }
 }
