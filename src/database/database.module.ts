@@ -3,13 +3,14 @@ import { ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import config from '../config/configuration';
+import { join } from 'path';
 
 @Global()
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       inject: [config.KEY],
-      useFactory: (configService: ConfigType<typeof config>) => {
+      useFactory: async (configService: ConfigType<typeof config>) => {
         const {
           host,
           port,
@@ -17,7 +18,6 @@ import config from '../config/configuration';
           username,
           password,
         } = configService.database;
-        console.table({ host, port, database, username, password });
 
         return {
           type: 'mysql',
@@ -26,8 +26,8 @@ import config from '../config/configuration';
           username,
           password,
           database,
-          entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          synchronize: false,
+          entities: [join(__dirname, '/**/*.entity{.ts,.js}')],
+          synchronize: true,
           autoLoadEntities: true,
         };
       },
@@ -36,14 +36,3 @@ import config from '../config/configuration';
   exports: [TypeOrmModule],
 })
 export class DatabaseModule {}
-
-// TypeOrmModule.forRoot({
-//   type: 'mysql',
-//   host: 'localhost',
-//   port: 3306,
-//   username: 'myuser',
-//   password: 'myuser',
-//   database: 'registration',
-//   entities: [__dirname + '/**/*.entity{.ts,.js}'],
-//   synchronize: true,
-// }),
