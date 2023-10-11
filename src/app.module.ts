@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+
 import { EventsModule } from './events/events.module';
 import configuration from './config/configuration';
-import { environment } from './config';
+import { environment, validationSchemaEnv } from './config';
 import { DatabaseModule } from './database/database.module';
 
 @Module({
@@ -12,6 +13,7 @@ import { DatabaseModule } from './database/database.module';
       load: [configuration],
       isGlobal: true,
       cache: true,
+      validationSchema: validationSchemaEnv,
     }),
     DatabaseModule,
     EventsModule,
