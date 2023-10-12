@@ -16,6 +16,7 @@ export const dataSourceOptions: DataSourceOptions = {
   entities: [join(__dirname, '../**/*.entity.ts')],
   migrations: [join(__dirname, '../../migrations/*.ts')],
   migrationsTableName: 'migrations',
+  timezone: '-5:00',
 };
 
 const AppDataSource = new DataSource(dataSourceOptions);

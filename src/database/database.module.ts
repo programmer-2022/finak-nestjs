@@ -29,6 +29,7 @@ import { join } from 'path';
           entities: [join(__dirname, '/**/*.entity{.ts,.js}')],
           synchronize: true,
           autoLoadEntities: true,
+          timezone: '-5:00',
         };
       },
     }),
